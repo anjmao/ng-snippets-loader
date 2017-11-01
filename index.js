@@ -1,33 +1,23 @@
 'use strict';
 
-const marked = require('marked');
 const loaderUtils = require("loader-utils");
-const assign = require("object-assign");
 const cheerio = require('cheerio');
 const hl = require('highlight.js');
 const highlightAuto = hl.highlightAuto;
 
-// default option
-var defaultOptions = {
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: true,
-    smartLists: true,
-    smartypants: false
-};
+const templateRegex = /template:([\`\s]*)([\s\S]*)[`]/gm;
 
 module.exports = function (source) {
-    const query = loaderUtils.parseQuery(this.query);
-    const configKey = query.config || 'ngSnippetLoader';
-    const options = Object.assign({}, defaultOptions, query, this.options[configKey]);
-    this.cacheable();
     this && this.cacheable && this.cacheable();
 
-    const $ = cheerio.load(source);
+    const templateHtml = (templateRegex.exec(source) || [])[2];
+    if (!templateHtml) {
+        return source;
+    }
 
+    source = source.replace(templateHtml, '<snippet>');
+
+    const $ = cheerio.load(templateHtml);
     const snippets = $('[snippet^="snippet"]');
     snippets.each(function(i, elem) {
         const el = $(this);
@@ -38,8 +28,8 @@ module.exports = function (source) {
         container.append(highlightAuto(code).value);
         el.removeAttr('snippet');
     });
-    console.log('out', $.html())
 
+    source = source.replace('<snippet>', $('body').html());
     return source;
 };
 
