@@ -16,8 +16,9 @@ describe('ng-snippets-loader', () => {
         const source = `
             @Component({
                 template: \`
+                    <div [innerHTML]="tmp"></div>
                     <div id="snippet1"></div>
-                    <ng-select snippet="snippet1">
+                    <ng-select id="test" snippet="snippet1">
                         <ng-option></ng-option>
                     </ng-select>
                 \`
@@ -26,18 +27,19 @@ describe('ng-snippets-loader', () => {
 
         const result = loader.call(context, source);
 
-        expect(result).toEqual(`
+        expect(result.replace(/ /g, '')).toEqual(`
             @Component({
                 template: \`
-                    <div id="snippet1">&lt;pre <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;hljs&quot;</span>&gt;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">code</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;html&quot;</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">ng-option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ng-option</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span></span></div>
-                    <ng-select>
+                    <div [innerHTML]="tmp"></div>
+                    <div id="snippet1"><pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">ng-select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"test"</span> <span class="hljs-attr">snippet</span>=<span class="hljs-string">"snippet1"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ng-option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ng-option</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ng-select</span>&gt;</span></code></pre></div>
+                    <ng-select id="test">
                         <ng-option></ng-option>
                     </ng-select>
                 \`
             })
-            export class MyComponent {}`);
+            export class MyComponent {}`.replace(/ /g, ''));
     });
 
     it('should return original source when template was not used', () => {
@@ -49,10 +51,10 @@ describe('ng-snippets-loader', () => {
 
         const result = loader.call(context, source);
 
-        expect(result).toEqual(`
+        expect(result.replace(/ /g, '')).toEqual(`
             @Component({
                 templateUrl: './tmp.html'
             })
-            export class MyComponent {}`);
+            export class MyComponent {}`.replace(/ /g, ''));
     });
 });

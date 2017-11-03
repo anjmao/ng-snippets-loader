@@ -23,11 +23,12 @@
   },
   "homepage": "https://github.com/anjmao/ng-snippets-loader#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "0.22.0",
     "he": "^1.1.1",
     "highlight.js": "^9.12.0",
     "loader-utils": "^1.1.0",
-    "marked": "^0.3.6"
+    "marked": "^0.3.6",
+    "pretty": "^2.0.0"
   },
   "devDependencies": {
     "@angular/common": "^5.0.0",
@@ -37,7 +38,9 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@types/cheerio": "^0.22.5",
     "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
     "awesome-typescript-loader": "^3.3.0",
+    "html-loader": "^0.5.1",
     "jest": "^21.2.1",
     "rxjs": "^5.5.2",
     "typescript": "^2.6.1",
