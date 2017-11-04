@@ -4,7 +4,7 @@ module.exports = {
     devtool: 'eval-source-map',
     entry: './example/main.ts',
     output: {
-        path: path.resolve(__dirname, './'),
+        path: path.resolve(__dirname, '../'),
         publicPath: 'http://localhost:8080/',
         filename: 'bundle.js'
     },
