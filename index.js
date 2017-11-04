@@ -1,7 +1,5 @@
 // @ts-check
 'use strict';
-
-const loaderUtils = require("loader-utils");
 const cheerio = require('cheerio');
 const hl = require('highlight.js');
 const pretty = require('pretty');
