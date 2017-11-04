@@ -1,4 +1,5 @@
-[![npm version](https://badge.fury.io/js/%40anjmao%2Fng-snippets-loader.svg)](https://badge.fury.io/js/%40anjmao%2Fng-snippets-loader)
+[![npm version](https://badge.fury.io/js/ng-snippets-loader.svg)](https://badge.fury.io/js/ng-snippets-loader)
+
 # ng-snippets-loader
 
 ## Demo
