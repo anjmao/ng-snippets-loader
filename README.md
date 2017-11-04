@@ -1,5 +1,9 @@
 # ng-snippets-loader
 
+## Demo
+
+https://anjmao.github.io/ng-snippets-loader/
+
 ## About
 
 This loader was written because I was too lazy to highlight code examples for my open source angular 2+ component https://github.com/ng-select/ng-select demo page by hand. This loader will automatically do these steps:
