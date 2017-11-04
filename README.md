@@ -32,4 +32,35 @@ Apple snippet attribute on html block you want to extract as an example snippet 
 </div>
 ```
 
+## Webpack configuration
+
+You just need to register ng-snippets-loader for .ts|.js and .html files
+
+```js
+...
+module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: ['awesome-typescript-loader?configFileName=./example/tsconfig.json', 'angular2-template-loader', 'ng-snippets-loader'],
+                exclude: [/node_modules\/(?!(ng2-.+))/],
+            },
+            {
+                test: /\.(html)$/,
+                loader: ['raw-loader', 'ng-snippets-loader']
+            }
+        ]
+    },
+```
+
+## Clone and run
+
+You can clone this repo and run example angular application
+
+```
+git clone git@github.com:anjmao/ng-snippets-loader.git
+yarn
+yarn start
+```
+
 
