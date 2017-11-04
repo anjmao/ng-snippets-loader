@@ -19,13 +19,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.md$/,
-                loader: ['html-loader', 'highlight-loader?']
+                test: /\.ts$/,
+                loader: ['awesome-typescript-loader?configFileName=./example/tsconfig.json', 'angular2-template-loader', 'ng-snippets-loader'],
+                exclude: [/node_modules\/(?!(ng2-.+))/],
             },
             {
-                test: /\.ts$/,
-                loader: ['awesome-typescript-loader?configFileName=./example/tsconfig.json', 'ng-snippets-loader'],
-                exclude: [/node_modules\/(?!(ng2-.+))/],
+                test: /\.(html)$/,
+                loader: ['raw-loader', 'ng-snippets-loader']
             }
         ]
     },

@@ -1,3 +1,4 @@
+// @ts-check
 'use strict';
 
 const loaderUtils = require("loader-utils");
@@ -9,41 +10,49 @@ const highlightAuto = hl.highlightAuto;
 const templateRegex = /template:([\`\s]*)([\s\S]*)[`]/gm;
 
 module.exports = function (source) {
+    // @ts-ignore
     this.cacheable && this.cacheable();
+    // @ts-ignore
+    const fileExt = getFileExtensions(this.resource);
+    if (fileExt === 'html') {
+        return highlightSnippets(source);
+    }
 
+    let templateValue = parseComponentTemplateValue(source);
+    if (!templateValue) {
+        return source;
+    }
+    source = source.replace(templateValue, '<template>');
+    templateValue = highlightSnippets(templateValue);
+    return source.replace('<template>', templateValue);
+};
+
+function parseComponentTemplateValue(source) {
     const regex = new RegExp(templateRegex);
     let parts = regex.exec(source);
     if (!parts) {
-        return source;
+        return null;
     }
+    return  parts[2];
+}
 
-    const templateHtml = parts[2];
-    if (!templateHtml) {
-        return source;
-    }
+function getFileExtensions(filename) {
+    return filename.split('.').pop()
+}
 
-    source = source.replace(templateHtml, '<snippet>');
-
-    const $ = cheerio.load(templateHtml, {lowerCaseAttributeNames: false, decodeEntities: false});
-
+function highlightSnippets(templateHtml) {
+    const $ = cheerio.load(templateHtml, { lowerCaseAttributeNames: false, decodeEntities: false });
     const snippets = $('[snippet]');
-    snippets.each(function(i, elem) {
+    snippets.each(function (i, elem) {
         const el = $(this);
-        const content = $.html(el.clone());
-        console.log('content', content);
+        const clone = el.clone();
+        clone.removeAttr('snippet');
+        const content = $.html(clone);
         const snippetId = el.attr('snippet');
         const container = $('#' + snippetId);
-        console.log('content', content);
         const code = `<pre class="hljs"><code class="lang-html">${highlightAuto(pretty(content), ['html']).value}</code></pre>`;
         container.append(code);
         el.removeAttr('snippet');
     });
-
-    source = source.replace('<snippet>', $.html());
-
-    return source;
-};
-
-function id(type) {
-    return type;
+    return $.html();
 }

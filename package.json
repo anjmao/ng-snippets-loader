@@ -1,7 +1,7 @@
 {
   "name": "ng-snippets-loader",
-  "version": "1.0.0",
-  "description": "todo",
+  "version": "0.2.0",
+  "description": "Highlight angular component template and copy as snippet",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/anjmao/ng-snippets-loader.git"
   },
   "keywords": [
-    "todo"
+    "snippets loader", "angular", "webpack loader"
   ],
   "author": "Andzej Maciusovic",
   "license": "MIT",
@@ -39,9 +39,11 @@
     "@types/cheerio": "^0.22.5",
     "@types/jest": "^21.1.5",
     "@types/node": "^8.0.47",
+    "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.3.0",
     "html-loader": "^0.5.1",
     "jest": "^21.2.1",
+    "raw-loader": "^0.5.1",
     "rxjs": "^5.5.2",
     "typescript": "^2.6.1",
     "webpack": "^3.8.1",

@@ -6,11 +6,13 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @Component({
     template: `
+        <h1>ng-snippets-loader</h1>
+        <h2>Template inside component</h2>
         <div id="snippet1"></div>
         <ul snippet="snippet1">
-            <li>test</li>
-            <li>test4</li>
-            <li>test4</li>
+            <li><a href="https://github.com/anjmao">My Github</a></li>
+            <li><a href="https://www.delfi.lt">Delfi News</a></li>
+            <li><a href="https://google.lt">Google</a></li>
         </ul>
 
         <div id="snippet2"></div>
@@ -19,14 +21,42 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
                 <a href="#">Cool</a>
             </nav>
         </div>
+
+        <div id="table"></div>
+        <div snippet="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hi</td>
+                        <td>Whats up?</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <child></child>
     `,
     selector: 'app'
 })
 class AppComponent {
 }
 
+@Component({
+    selector: 'child',
+    templateUrl: './child.html'
+})
+class ChildComponent {
+    showTable = true;
+}
+
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, ChildComponent],
     imports: [BrowserModule],
     bootstrap: [AppComponent]
 })
