@@ -9,20 +9,23 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
         <h1>ng-snippets-loader</h1>
         <h2>Template inside component</h2>
         <div id="snippet1"></div>
-        <ul snippet="snippet1">
+        ---html,true
+        <ul>
             <li><a href="https://github.com/anjmao">My Github</a></li>
             <li><a href="https://www.delfi.lt">Delfi News</a></li>
             <li><a href="https://google.lt">Google</a></li>
         </ul>
+        ---
 
-        <div id="snippet2"></div>
-        <div id="it-works" snippet="snippet2">
+        ---html
+        <div id="it-works">
             <nav>
                 <a href="#">Cool</a>
             </nav>
         </div>
+        ---
 
-        <div id="table"></div>
+        ---html
         <div snippet="table">
             <table>
                 <thead>
@@ -39,7 +42,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
                 </tbody>
             </table>
         </div>
-
+        ---
+        
         <child></child>
     `,
     selector: 'app'

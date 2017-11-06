@@ -1,4 +1,5 @@
 const loader = require('./index');
+const utils = require('./utils');
 
 describe('ng-snippets-loader', () => {
 
@@ -18,29 +19,20 @@ describe('ng-snippets-loader', () => {
             @Component({
                 template: \`
                     <div [innerHTML]="tmp"></div>
-                    <div id="snippet1"></div>
-                    <ng-select id="test" snippet="snippet1">
+                    \`\`\`html
+                    <ng-select id="test"
+                            class="test"
+                            id="new">
                         <ng-option></ng-option>
                     </ng-select>
+                    \`\`\`
                 \`
             })
             export class MyComponent {}`;
 
         const result = loader.call(context, source);
 
-        expect(result.replace(/ /g, '')).toEqual(`
-        @Component({
-            template: \`
-                <div [innerHTML]="tmp"></div>
-                <div id="snippet1"><pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">ng-select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"test"</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">ng-option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ng-option</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">ng-select</span>&gt;</span></code></pre></div>
-                <ng-select id="test">
-                    <ng-option></ng-option>
-                </ng-select>
-            \`
-        })
-        export class MyComponent {}`.replace(/ /g, ''));
+        expect(result).toEqual(``);
     });
 
     it('should insert highlighed snippets in separate html template string', () => {
@@ -48,21 +40,16 @@ describe('ng-snippets-loader', () => {
 
         const source = `
         <div [innerHTML]="tmp"></div>
-        <div id="snippet1"></div>
-        <ng-select id="test" snippet="snippet1">
+        \`\`\`html
+        <ng-select id="test">
             <ng-option></ng-option>
-        </ng-select>`;
+        </ng-select>
+        \`\`\`
+        `;
 
         const result = loader.call(context, source);
 
-        expect(result.replace(/ /g, '')).toEqual(`
-        <div [innerHTML]="tmp"></div>
-        <div id="snippet1"><pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">ng-select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"test"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">ng-option</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ng-option</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">ng-select</span>&gt;</span></code></pre></div>
-        <ng-select id="test">
-            <ng-option></ng-option>
-        </ng-select>`.replace(/ /g, ''));
+        expect(result).toEqual(``);
     });
 
     it('should return original source when template was not used', () => {

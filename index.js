@@ -2,10 +2,11 @@
 'use strict';
 const cheerio = require('cheerio');
 const hl = require('highlight.js');
-const pretty = require('pretty');
+//const pretty = require('pretty');
 const highlightAuto = hl.highlightAuto;
 
 const templateRegex = /template:([\`\s]*)([\s\S]*)[`]/gm;
+const snippetRegex = /---[a-z,]*\n[\s\S]*?[\n]*?---/g;
 
 module.exports = function (source) {
     // @ts-ignore
@@ -39,7 +40,25 @@ function getFileExtensions(filename) {
 }
 
 function highlightSnippets(templateHtml) {
-    const $ = cheerio.load(templateHtml, { lowerCaseAttributeNames: false, decodeEntities: false });
+    templateHtml = templateHtml.replace(snippetRegex, (val) => {
+        const parts = val.split('\n');
+        const firstLine = parts[0];
+        const options = firstLine.replace('---', '').split(',');
+        const lang = options[0] || 'html';
+        const runnable = options[1] || false;
+        const lastLine = parts[parts.length - 1];
+        const snippet = val.replace(firstLine, '').replace(lastLine, '');
+        let code = `<pre class="hljs"><code class="lang-html">${highlightAuto(snippet, [lang]).value}</code></pre>`;
+        if (runnable) {
+            code += `\n${snippet}`;
+        }
+        return code;
+    });
+    return templateHtml;
+}
+
+function highlightSnippets2(templateHtml) {
+    const $ = cheerio.load(templateHtml, { lowerCaseAttributeNames: false, decodeEntities: true });
     const snippets = $('[snippet]');
     snippets.each(function (i, elem) {
         const el = $(this);
@@ -48,9 +67,13 @@ function highlightSnippets(templateHtml) {
         const content = $.html(clone);
         const snippetId = el.attr('snippet');
         const container = $('#' + snippetId);
-        const code = `<pre class="hljs"><code class="lang-html">${highlightAuto(pretty(content), ['html']).value}</code></pre>`;
+        const code = `<pre class="hljs"><code class="lang-html">${highlightAuto(content, ['html']).value}</code></pre>`;
         container.append(code);
         el.removeAttr('snippet');
     });
     return $.html();
+}
+
+function pretty(content) {
+    return content;
 }
