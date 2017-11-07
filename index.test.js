@@ -3,56 +3,77 @@ const utils = require('./utils');
 
 describe('ng-snippets-loader', () => {
 
-    let context = null;
-
-    beforeEach(() => {
-        context = {
-            query: '?',
-            resource: 'file.ts',
-            options: {},
-            cacheable: () => { }
-        }
+    createContext = (file) => ({
+        query: '?',
+        resource: file,
+        options: {},
+        cacheable: () => { }
     });
 
-    it('should insert highlighed snippets in angular component template string', () => {
+    it('should highlight snippets in angular component template string', () => {
+        let context = createContext('app.component.ts');
+        const cases = [
+            {
+                input: `
+@Component({
+    template: \`
+        ---html
+        <div id="it-works">
+            <nav>
+                <a href="#">Cool</a>
+            </nav>
+        </div>
+        ---
+    \`,
+    selector: 'app'
+})
+class AppComponent {
+    const str = \`\`;
+}`,
+                ouput: `
+@Component({
+    template: \`
+        <pre class="hljs"><code class="lang-html">
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"it-works"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span>Cool<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+    \`,
+    selector: 'app'
+})
+class AppComponent {
+    const str = \`\`;
+}`
+            }
+        ];
+
+        cases.forEach(c => {
+            expect(loader.call(context, c.input)).toEqual(c.ouput);
+        });
+
+    });
+
+    it('should highlight snippets in templateUrl html file', () => {
+        let context = createContext('app.component.html');
+
         const source = `
-            @Component({
-                template: \`
-                    <div [innerHTML]="tmp"></div>
-                    \`\`\`html
-                    <ng-select id="test"
-                            class="test"
-                            id="new">
-                        <ng-option></ng-option>
-                    </ng-select>
-                    \`\`\`
-                \`
-            })
-            export class MyComponent {}`;
+---html
+<div></div>
+---`;
 
         const result = loader.call(context, source);
 
-        expect(result).toEqual(``);
-    });
-
-    it('should insert highlighed snippets in separate html template string', () => {
-        context.resource = 'file.html';
-
-        const source = `
-        <div [innerHTML]="tmp"></div>
-        \`\`\`html
-        <ng-select id="test">
-            <ng-option></ng-option>
-        </ng-select>
-        \`\`\`
-        `;
-
-        const result = loader.call(context, source);
-
-        expect(result).toEqual(``);
+        expect(result).toEqual(`
+<pre class="hljs"><code class="lang-html">
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>`);
     });
 
     it('should return original source when template was not used', () => {
+        let context = createContext('app.component.ts');
+
         const source = `
             @Component({
                 templateUrl: './tmp.html'
@@ -61,10 +82,10 @@ describe('ng-snippets-loader', () => {
 
         const result = loader.call(context, source);
 
-        expect(result.replace(/ /g, '')).toEqual(`
+        expect(result).toEqual(`
             @Component({
                 templateUrl: './tmp.html'
             })
-            export class MyComponent {}`.replace(/ /g, ''));
+            export class MyComponent {}`);
     });
 });

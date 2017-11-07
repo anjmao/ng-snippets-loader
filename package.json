@@ -14,7 +14,9 @@
     "url": "git+https://github.com/anjmao/ng-snippets-loader.git"
   },
   "keywords": [
-    "snippets loader", "angular", "webpack loader"
+    "snippets loader",
+    "angular",
+    "webpack loader"
   ],
   "author": "Andzej Maciusovic",
   "license": "MIT",
@@ -23,9 +25,7 @@
   },
   "homepage": "https://github.com/anjmao/ng-snippets-loader#readme",
   "dependencies": {
-    "cheerio": "0.22.0",
-    "highlight.js": "^9.12.0",
-    "pretty": "^2.0.0"
+    "highlight.js": "^9.12.0"
   },
   "devDependencies": {
     "@angular/common": "^5.0.0",

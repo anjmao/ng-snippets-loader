@@ -1,11 +1,9 @@
 // @ts-check
 'use strict';
-const cheerio = require('cheerio');
 const hl = require('highlight.js');
-//const pretty = require('pretty');
 const highlightAuto = hl.highlightAuto;
 
-const templateRegex = /template:([\`\s]*)([\s\S]*)[`]/gm;
+const templateRegex = /(template\s*:\s*`)([^`]*)`/g;
 const snippetRegex = /---[a-z,]*\n[\s\S]*?[\n]*?---/g;
 
 module.exports = function (source) {
@@ -29,10 +27,7 @@ module.exports = function (source) {
 function parseComponentTemplateValue(source) {
     const regex = new RegExp(templateRegex);
     let parts = regex.exec(source);
-    if (!parts) {
-        return null;
-    }
-    return  parts[2];
+    return parts ? parts[2] : null;
 }
 
 function getFileExtensions(filename) {
@@ -55,25 +50,4 @@ function highlightSnippets(templateHtml) {
         return code;
     });
     return templateHtml;
-}
-
-function highlightSnippets2(templateHtml) {
-    const $ = cheerio.load(templateHtml, { lowerCaseAttributeNames: false, decodeEntities: true });
-    const snippets = $('[snippet]');
-    snippets.each(function (i, elem) {
-        const el = $(this);
-        const clone = el.clone();
-        clone.removeAttr('snippet');
-        const content = $.html(clone);
-        const snippetId = el.attr('snippet');
-        const container = $('#' + snippetId);
-        const code = `<pre class="hljs"><code class="lang-html">${highlightAuto(content, ['html']).value}</code></pre>`;
-        container.append(code);
-        el.removeAttr('snippet');
-    });
-    return $.html();
-}
-
-function pretty(content) {
-    return content;
 }
