@@ -6,12 +6,9 @@
 
 https://anjmao.github.io/ng-snippets-loader/
 
-## About
+## What problem does this laoder solves
 
-This loader was written because I was too lazy to highlight code examples for my open source angular 2+ component https://github.com/ng-select/ng-select demo page by hand. This loader will automatically do these steps:
-
-1) Extract template value from component if `template` is used and highlight all snippets.
-2) Highlight all snippets in html template if `templateUrl` is used.
+Lets say you are creating some component demo page with examples and you want to add snippets with highlighted code and you want to keep whem in sync with your component html markup and api. You can use markdown or write encoded html by hand, but if you are lazy keep reading.
 
 ## Install
 
@@ -25,18 +22,40 @@ using yarn
 yarn add ng-snippets-loader --dev
 ```
 
-## Usage
+## How it works
 
-Apple snippet attribute on html block you want to extract as an example snippet and add div with id equal to snippet name. Snippet copy with highlighted html will be copied to this div.
+Probably most common case is that you want to show some html component markup with attributes like this
 
 ```html
-<div id="snippet1"></div>
-<div id="it-works" snippet="snippet1">
-    <nav>
-        <a href="#">Cool</a>
-    </nav>
-</div>
+<ng-select [items]="cities"
+            bindLabel="name"
+            placeholder="Select value"
+            [clearable]="false"
+            [(ngModel)]="selectedCity">
+</ng-select>
 ```
+
+Snippet rule is similar to github markdown but instead of using ` symbol you use -
+```
+---<lang>,<runnable>
+[Code snippet here>
+---
+```
+where `<lang>` is language `html` or `js` and `<runnable>` is boolean property, if it is true you code snippet will be executed bellow.
+
+Final snippet will look like this
+
+```
+---html,true
+<ng-select [items]="cities"
+            bindLabel="name"
+            placeholder="Select value"
+            [clearable]="false"
+            [(ngModel)]="selectedCity">
+</ng-select>
+---
+```
+
 
 ## Webpack configuration
 
