@@ -10,26 +10,26 @@ describe('ng-snippets-loader', () => {
         cacheable: () => { }
     });
 
-fit('should highlight snippets in angular component template string', () => {
+it('should highlight snippets in angular component template string', () => {
         let context = createContext('app.component.ts');
         const cases = [
             {
                 input: `
-@Component({
-    template: \`
-        ---html
-        <div id="it-works">
-            <nav>
-                <a href="#">Cool</a>
-            </nav>
-        </div>
-        ---
-    \`,
-    selector: 'app'
-})
-class AppComponent {
-    const str = \`\`;
-}`,
+                @Component({
+                    template: \`
+                        ---html
+                        <div id="it-works">
+                            <nav>
+                                <a href="#">Cool</a>
+                            </nav>
+                        </div>
+                        ---
+                    \`,
+                    selector: 'app'
+                })
+                class AppComponent {
+                    const str = \`\`;
+                }`,
                 ouput: `
 @Component({
     template: \`
@@ -55,13 +55,21 @@ class AppComponent {
 
     });
 
-    it('should highlight snippets in templateUrl html file', () => {
+    fit('should highlight snippets in templateUrl html file', () => {
         let context = createContext('app.component.html');
 
         const source = `
 ---html
 <div></div>
----`;
+---
+
+---js
+const value = [1, 2, 3];
+value.forEach(n => {
+    console.log('number', n);
+});
+---
+`;
 
         const result = loader.call(context, source);
 

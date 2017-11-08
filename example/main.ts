@@ -19,11 +19,19 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
         ---
 
         ---html
-        <div id="it-works">
+        <div id="it-works"
+             class="container">
             <nav>
                 <a href="#">Cool</a>
             </nav>
         </div>
+        ---
+
+        ---js
+        const value = [1, 2, 3];
+        value.forEach(n => {
+            console.log('number', n);
+        });
         ---
 
         ---html

@@ -36,18 +36,31 @@ function getFileExtensions(filename) {
 
 function highlightSnippets(templateHtml) {
     templateHtml = templateHtml.replace(snippetRegex, (val) => {
-        const parts = val.split('\n');
+        const parts = val.split(/\n/);
         const firstLine = parts[0];
         const options = firstLine.replace('---', '').split(',');
         const lang = options[0] || 'html';
         const runnable = options[1] || false;
         const lastLine = parts[parts.length - 1];
-        const snippet = val.replace(firstLine, '').replace(lastLine, '');
-        let code = `<pre class="hljs"><code class="lang-html">${highlightAuto(snippet, [lang]).value}</code></pre>`;
+        const wcount = getLeftWhitespacesCount(parts[1]);
+        let snippet = parts.slice(1, parts.length - 1).join('\n');
+        snippet = normalizeWhitespaces(wcount, snippet);
+        const highlighed = highlightAuto(snippet, [lang]).value.replace(/\n/, '');
+        let code = `<pre class="hljs"><code class="lang-html">${highlighed}</code></pre>`;
         if (runnable) {
             code += `\n${snippet}`;
         }
         return code;
     });
     return templateHtml;
+}
+
+function getLeftWhitespacesCount(line) {
+    return line.match(/^\s*/)[0].length;
+}
+
+function normalizeWhitespaces(wcount, snippet) {
+    return snippet.split(/\n/).reduce((current, next) => {
+        return current + '\n' + next.slice(wcount, next.length);
+    }, '');
 }
