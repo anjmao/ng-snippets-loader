@@ -1,6 +1,6 @@
 {
   "name": "ng-snippets-loader",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Highlight angular component template and copy as snippet",
   "main": "index.js",
   "scripts": {
