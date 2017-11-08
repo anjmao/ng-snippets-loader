@@ -10,7 +10,7 @@ describe('ng-snippets-loader', () => {
         cacheable: () => { }
     });
 
-    it('should highlight snippets in angular component template string', () => {
+fit('should highlight snippets in angular component template string', () => {
         let context = createContext('app.component.ts');
         const cases = [
             {

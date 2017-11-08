@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build:demo": "webpack --config ./example/webpack.config.js --progress --profile --bail",
+    "build:demo": "webpack --config ./example/webpack.config.js --progress --profile --bail --env=gh-pages",
     "start": "webpack-dev-server --config ./example/webpack.config.js --inline --progress --port 8080"
   },
   "repository": {
@@ -38,10 +38,16 @@
     "@types/node": "^8.0.47",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.3.0",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
+    "node-sass": "^4.6.0",
     "raw-loader": "^0.5.1",
     "rxjs": "^5.5.2",
+    "sass-loader": "^6.0.6",
     "typescript": "^2.6.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3",

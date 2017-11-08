@@ -1,3 +1,5 @@
+import './style.scss';
+
 import 'zone.js';
 
 import { NgModule, Component } from '@angular/core';
@@ -8,7 +10,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     template: `
         <h1>ng-snippets-loader</h1>
         <h2>Template inside component</h2>
-        <div id="snippet1"></div>
         ---html,true
         <ul>
             <li><a href="https://github.com/anjmao">My Github</a></li>
