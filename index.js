@@ -21,7 +21,8 @@ module.exports = function (source) {
     }
     source = source.replace(templateValue, '<template>');
     templateValue = highlightSnippets(templateValue);
-    return source.replace('<template>', templateValue);
+    source = source.replace('<template>', templateValue);
+    return source;
 };
 
 function parseComponentTemplateValue(source) {
@@ -46,7 +47,7 @@ function highlightSnippets(templateHtml) {
         let snippet = parts.slice(1, parts.length - 1).join('\n');
         snippet = normalizeWhitespaces(wcount, snippet);
         const highlighed = highlightAuto(snippet, [lang]).value.replace(/\n/, '');
-        let code = `<pre class="hljs"><code class="lang-html">${highlighed}</code></pre>`;
+        let code = `<pre class="hljs" ngNonBindable><code class="lang-${lang}">${highlighed}</code></pre>`;
         if (runnable) {
             code += `\n${snippet}`;
         }

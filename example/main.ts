@@ -9,7 +9,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 @Component({
     template: `
         <h1>ng-snippets-loader</h1>
-        <h2>Template inside component</h2>
+        <h3>HTML with ouput</h3>
         ---html,true
         <ul>
             <li><a href="https://github.com/anjmao">My Github</a></li>
@@ -18,6 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
         </ul>
         ---
 
+        <h3>HTML without output</h3>
         ---html
         <div id="it-works"
              class="container">
@@ -27,30 +28,11 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
         </div>
         ---
 
+        <h3>Javascript snippet</h3>
         ---js
         const value = [1, 2, 3];
-        value.forEach(n => {
-            console.log('number', n);
-        });
-        ---
-
-        ---html
-        <div snippet="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Column 1</th>
-                        <th>Column 2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Hi</td>
-                        <td>Whats up?</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        value.push(7);
+        console.log(value);
         ---
         
         <child></child>

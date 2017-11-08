@@ -1,8 +1,8 @@
-<h2>Template in separate html file</h2>
+<h3>Template in separate html file</h3>
 
----html
-<div class="table table-xxxx" id="table-x">
-    <table *ngIf="showTable">
+---html,true
+<div data-attr="table-x">
+    <table *ngIf="showTable" class="table table-bordered">
         <thead>
             <tr>
                 <th>Column 1</th>
