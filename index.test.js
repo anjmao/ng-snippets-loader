@@ -88,12 +88,7 @@ it('should highlight snippets in angular component template string', () => {
         const result = loader.call(context, source);
 
         expect(result.replace(/\s/g, '')).toEqual(`
-        <div>keep this original</div>
-<pre class="hljs" ngNonBindable><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
-<pre class="hljs" ngNonBindable><code class="lang-js"><span class="hljs-keyword">const</span> value = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
-value.forEach(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> {
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'number'</span>, n);
-});</code></pre>`.replace(/\s/g, ''));
+        <div>keepthisoriginal</div><preclass=\"hljs\"ngNonBindable><codeclass=\"lang-html\"><spanclass=\"hljs-tag\">&lt;<spanclass=\"hljs-name\">div</span>&gt;</span><spanclass=\"hljs-tag\">&lt;/<spanclass=\"hljs-name\">div</span>&gt;</span></code></pre><preclass=\"hljs\"ngNonBindable><codeclass=\"lang-js\"><spanclass=\"hljs-keyword\">const</span>value=[<spanclass=\"hljs-number\">1</span>,<spanclass=\"hljs-number\">2</span>,<spanclass=\"hljs-number\">3</span>];value.forEach(<spanclass=\"hljs-function\"><spanclass=\"hljs-params\">n</span>=&gt;</span>&#123;<spanclass=\"hljs-built_in\">console</span>.log(<spanclass=\"hljs-string\">'number'</span>,n);&#125;);</code></pre>`.replace(/\s/g, ''));
     });
 
     it('should return original source when template was not used', () => {

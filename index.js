@@ -48,6 +48,7 @@ function highlightSnippets(templateHtml) {
         snippet = normalizeWhitespaces(wcount, snippet);
         const highlighed = highlightAuto(snippet, [lang]).value.replace(/\n/, '');
         let code = `<pre class="hljs" ngNonBindable><code class="lang-${lang}">${highlighed}</code></pre>`;
+        code = escapeBraces(code);
         if (runnable) {
             code += `\n${snippet}`;
         }
@@ -64,4 +65,8 @@ function normalizeWhitespaces(wcount, snippet) {
     return snippet.split(/\n/).reduce((current, next) => {
         return current + '\n' + next.slice(wcount, next.length);
     }, '');
+}
+
+function escapeBraces(snippet) {
+    return snippet.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
 }

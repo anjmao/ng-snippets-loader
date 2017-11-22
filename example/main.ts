@@ -33,6 +33,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
         const value = [1, 2, 3];
         value.push(7);
         console.log(value);
+        value.forEach(v => {
+            console.log('value', v);
+        });
         ---
         
         <child></child>
