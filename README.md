@@ -67,7 +67,7 @@ module: {
         rules: [
             {
                 test: /\.ts$/,
-                loader: ['awesome-typescript-loader?configFileName=./example/tsconfig.json', 'angular2-template-loader', 'ng-snippets-loader'],
+                loader: ['awesome-typescript-loader', 'angular2-template-loader', 'ng-snippets-loader'],
                 exclude: [/node_modules\/(?!(ng2-.+))/],
             },
             {
